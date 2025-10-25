@@ -11,27 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->bigInteger('income_id');
+            $table->string('number');
             $table->date('date');
-            $table->dateTime('last_change_date');
+            $table->date('last_change_date');
             $table->string('supplier_article');
             $table->string('tech_size');
+            $table->bigInteger('barcode');
             $table->integer('quantity');
-            $table->boolean('is_supply');
-            $table->boolean('is_realization');
-            $table->integer('quantity_full');
+            $table->string('total_price');
+            $table->date('date_close');
             $table->string('warehouse_name');
-            $table->integer('in_way_to_client');
-            $table->integer('in_way_from_client');
             $table->bigInteger('nm_id')->unique();
-            $table->string('subject');
-            $table->string('category');
-            $table->string('brand');
-            $table->integer('sc_code');
-            $table->decimal('price');
-            $table->decimal('discount');
         });
     }
 
@@ -40,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('incomes');
     }
 };

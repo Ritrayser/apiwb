@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Clients\WBClient;
+use App\Models\Income;
+use App\Models\Order;
 use App\Models\Stock;
+use App\Models\Sale;
 
 class WBService
 {
@@ -26,7 +29,7 @@ class WBService
           'date' => $stock['date'],
           'last_change_date' => $stock['last_change_date'],
           'supplier_article' => $stock['supplier_article'],
-          'tech_size' => $stock['tech_size'], // исправлено, было 'supplier_article'
+          'tech_size' => $stock['tech_size'],
           'quantity' => $stock['quantity'],
           'is_supply' => $stock['is_supply'],
           'is_realization' => $stock['is_realization'],
@@ -42,7 +45,101 @@ class WBService
           'discount' => $stock['discount'],
         ]
       );
-      dd($stock);
+    }
+  }
+
+  public function saveIncomes()
+  {
+    $incomes = $this->client->getIncomes();
+
+    foreach ($incomes['data'] as $key => $income) {
+
+      Income::updateOrCreate(
+        ['nm_id' => $income['nm_id']],
+        [
+          'income_id' => $income['income_id'],
+          'number' => $income['number'],
+          'date' => $income['date'],
+          'last_change_date' => $income['last_change_date'],
+          'supplier_article' => $income['supplier_article'],
+          'tech_size' => $income['tech_size'],
+          'barcode' => $income['barcode'],
+          'quantity' => $income['quantity'],
+          'total_price' => $income['total_price'],
+          'date_close' => $income['date_close'],
+          'warehouse_name' => $income['warehouse_name'],
+        ]
+      );
+    }
+  }
+
+  public function saveSales()
+  {
+    $sales = $this->client->getSales();
+
+    foreach ($sales['data'] as $key => $sale) {
+      Sale::updateOrCreate(
+        ['nm_id' => $sale['nm_id']],
+        [
+          'g_number' => $sale['g_number'],
+          'date' => $sale['date'],
+          'last_change_date' => $sale['last_change_date'],
+          'supplier_article' => $sale['supplier_article'],
+          'tech_size' => $sale['tech_size'],
+          'barcode' => $sale['barcode'],
+          'total_price' => $sale['total_price'],
+          'discount_percent' => $sale['discount_percent'],
+          'is_supply' => $sale['is_supply'],
+          'is_realization' => $sale['is_realization'],
+          'promo_code_discount' => $sale['promo_code_discount'],
+          'warehouse_name' => $sale['warehouse_name'],
+          'country_name' => $sale['country_name'],
+          'oblast_okrug_name' => $sale['oblast_okrug_name'],
+          'region_name' => $sale['region_name'],
+          'income_id' => $sale['income_id'],
+          'sale_id' => $sale['sale_id'],
+          'odid' => $sale['odid'],
+          'spp' => $sale['spp'],
+          'for_pay' => $sale['for_pay'],
+          'finished_price' => $sale['finished_price'],
+          'price_with_disc' => $sale['price_with_disc'],
+          'subject' => $sale['subject'],
+          'category' => $sale['category'],
+          'brand' => $sale['brand'],
+          'is_storno' => $sale['is_storno'],
+        ]
+      );
+    }
+  }
+
+  public function saveOrders()
+  {
+    $orders = $this->client->getOrders();
+
+    foreach ($orders['data'] as $key => $order) {
+      Order::updateOrCreate(
+        ['nm_id' => $order['nm_id']],
+        [
+          'g_number' => $order['g_number'],
+          'date' => $order['date'],
+          'last_change_date' => $order['last_change_date'],
+          'supplier_article' => $order['supplier_article'],
+          'tech_size' => $order['tech_size'],
+          'barcode' => $order['barcode'],
+          'total_price' => $order['total_price'],
+          'discount_percent' => $order['discount_percent'],
+          'warehouse_name' => $order['warehouse_name'],
+          'oblast' => $order['oblast'],
+          'income_id' => $order['income_id'],
+          'odid' => $order['odid'],
+          'nm_id' => $order['nm_id'],
+          'subject' => $order['subject'],
+          'category' => $order['category'],
+          'brand' => $order['brand'],
+          'is_cancel' => $order['is_cancel'],
+          'cancel_dt' => $order['cancel_dt'],
+        ]
+      );
     }
   }
 }
