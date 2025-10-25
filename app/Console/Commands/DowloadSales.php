@@ -12,7 +12,7 @@ class DowloadSales extends Command
      *
      * @var string
      */
-    protected $signature = 'dowload:sales';
+    protected $signature = 'dowload:sales {--dateFrom=""} {--dateTo=""} {--page=1} {--limit=5}';
 
     /**
      * The console command description.
@@ -26,6 +26,10 @@ class DowloadSales extends Command
      */
     public function handle(WBService $service)
     {
-        $service->saveSales();
+        $dateFrom = $this->option('dateFrom');
+        $dateTo = $this->option('dateTo');
+        $page = $this->option('page');
+        $limit = $this->option('limit');
+        $service->saveSales($dateFrom, $dateTo, $page, $limit);
     }
 }

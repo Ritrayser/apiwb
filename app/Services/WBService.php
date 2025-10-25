@@ -17,9 +17,9 @@ class WBService
     $this->client = $client;
   }
 
-  public function saveStocks()
+  public function saveStocks(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5)
   {
-    $stocks = $this->client->getStocks();
+    $stocks = $this->client->getStocks($dateFrom, $dateTo, $page, $limit);
 
     foreach ($stocks['data'] as $key => $stock) {
 
@@ -48,9 +48,9 @@ class WBService
     }
   }
 
-  public function saveIncomes()
+  public function saveIncomes(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5)
   {
-    $incomes = $this->client->getIncomes();
+    $incomes = $this->client->getIncomes($dateFrom, $dateTo, $page, $limit);
 
     foreach ($incomes['data'] as $key => $income) {
 
@@ -73,9 +73,9 @@ class WBService
     }
   }
 
-  public function saveSales()
+  public function saveSales(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5)
   {
-    $sales = $this->client->getSales();
+    $sales = $this->client->getSales($dateFrom, $dateTo, $page, $limit);
 
     foreach ($sales['data'] as $key => $sale) {
       Sale::updateOrCreate(
@@ -112,9 +112,9 @@ class WBService
     }
   }
 
-  public function saveOrders()
+  public function saveOrders(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5)
   {
-    $orders = $this->client->getOrders();
+    $orders = $this->client->getOrders($dateFrom, $dateTo, $page, $limit);
 
     foreach ($orders['data'] as $key => $order) {
       Order::updateOrCreate(

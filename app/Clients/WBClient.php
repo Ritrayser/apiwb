@@ -3,54 +3,55 @@
 namespace App\Clients;
 
 use Illuminate\Support\Facades\Http;
+use Ramsey\Uuid\Type\Integer;
 
 class WBClient
 {
-    public function getStocks(): array
+    public function getStocks(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5): array
     {
-        $result = Http::get('http://109.73.206.144:6969/api/stocks', [
-            'key' => 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie',
-            'dateFrom' => '2025-10-24',
-            'dateTo' => '',
-            'page' => '1',
-            'limit' => '1',
+        $result = Http::get(config('wb.url') . '/api/stocks', [
+            'key' => config('wb.api_token'),
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'limit' => $limit,
         ]);
         return $result->json();
     }
 
-    public function getIncomes()
+    public function getIncomes(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5): array
     {
 
-        $result = Http::get('http://109.73.206.144:6969/api/incomes', [
-            'key' => 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie',
-            'dateFrom' => '2025-10-25',
-            'dateTo' => '2025-10-26',
-            'page' => '1',
-            'limit' => '1',
+        $result = Http::get(config('wb.url') . '/api/incomes', [
+            'key' => config('wb.api_token'),
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'limit' => $limit,
         ]);
         return $result->json();
     }
 
-    public function getSales()
+    public function getSales(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5): array
     {
-        $result = Http::get('http://109.73.206.144:6969/api/sales', [
-            'key' => 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie',
-            'dateFrom' => '2025-10-25',
-            'dateTo' => '',
-            'page' => '1',
-            'limit' => '1',
+        $result = Http::get(config('wb.url') . '/api/sales', [
+            'key' => config('wb.api_token'),
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'limit' => $limit,
         ]);
         return $result->json();
     }
 
-    public function getOrders()
+    public function getOrders(string $dateFrom='', string $dateTo='', int $page=1, int $limit=5): array
     {
-        $result = Http::get('http://109.73.206.144:6969/api/orders', [
-            'key' => 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie',
-            'dateFrom' => '2025-10-25',
-            'dateTo' => '2025-10-26',
-            'page' => '1',
-            'limit' => '1',
+        $result = Http::get(config('wb.url') . '/api/orders', [
+            'key' => config('wb.api_token'),
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'page' => $page,
+            'limit' => $limit,
         ]);
         return $result->json();
     }

@@ -12,7 +12,7 @@ class DowloadIncomes extends Command
      *
      * @var string
      */
-    protected $signature = 'dowload:incomes';
+    protected $signature = 'dowload:incomes {--dateFrom=""} {--dateTo=""} {--page=1} {--limit=5}';
 
     /**
      * The console command description.
@@ -26,6 +26,10 @@ class DowloadIncomes extends Command
      */
     public function handle(WBService $service)
     {
-        $service->saveIncomes();
+        $dateFrom = $this->option('dateFrom');
+        $dateTo = $this->option('dateTo');
+        $page = $this->option('page');
+        $limit = $this->option('limit');
+        $service->saveIncomes($dateFrom, $dateTo, $page, $limit);
     }
 }
